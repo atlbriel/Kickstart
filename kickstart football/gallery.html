@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — KickStart Football Photos & Videos</title>
+  <meta name="description" content="Photos and videos from our KickStart Football sessions and fun days in Nairobi." />
+  <link rel="icon" type="image/png" href="kickstart-logo-transparent.jpg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="nav">
+    <div class="container nav__inner">
+      <a href="index.html" class="brand">
+        <img src="kickstart-logo-transparent.jpg" alt="KickStart Football logo" class="brand__logo" />
+        <span class="brand__text">
+          KickStart <small>FOOTBALL</small>
+        </span>
+      </a>
+
+      <nav>
+        <ul class="nav__links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="gallery.html" class="active">Gallery</a></li>
+          <li><a href="kits.html">Kits</a></li>
+          <li><a href="faqs.html">FAQs</a></li>
+          <li><a href="register.html">Register</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Gallery Section -->
+  <section class="gallery" style="padding-top:3rem">
+    <div class="container">
+
+      <h2>Photos & Videos</h2>
+      <p class="section-lead">
+        A peek into our sessions — swap these placeholders for your own media.
+      </p>
+
+      <!-- 12 PHOTO SLOTS -->
+      <div class="gallery__grid">
+
+        <div class="gallery__item">
+          <img src="1.jpg" alt="Session moment" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="2.jpg" alt="Kids Fun Day" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="3.jpg" alt="Program overview" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="4.jpg" alt="Fun time" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="10.jpg" alt="Training session" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="6.jpg" alt="Fun time" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="7.jpeg" alt="Fun time" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="11.jpg" alt="Football drills" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="15.jpg" alt="Team activity" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="18.jpg" alt="Practice game" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="19.jpg" alt="Players warming up" />
+        </div>
+
+        <div class="gallery__item">
+          <img src="20.jpg" alt="Celebration moment" />
+        </div>
+
+      </div>
+
+      <!-- Videos -->
+      <h3 class="videos__title">Videos</h3>
+
+      <!-- 6 VIDEO SLOTS -->
+      <div class="videos__grid">
+
+        <!-- Video 1 -->
+        <div class="video-card">
+          <video controls poster="vidpic1.jpg">
+            <source src="train.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <p>Training Highlights</p>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="video-card">
+          <video controls poster="vidpic3.jpg">
+            <source src="8.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <p>Fun Day Moments</p>
+        </div>
+
+        <!-- Video 3 -->
+        <div class="video-card">
+          <video controls poster="vidpic2.jpg">
+            <source src="skill.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <p>Skills Practice</p>
+        </div>
+
+        <!-- Video 4 -->
+        <div class="video-card">
+          <video controls poster="vidpic4.jpg">
+            <source src="funtime.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <p>Fun time</p>
+        </div>
+
+        <!-- Video 5 -->
+        <div class="video-card">
+          <video controls poster="vidpic5.jpg">
+            <source src="fun.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <p>Training</p>
+        </div>
+
+        <!-- Video 6 -->
+        <div class="video-card">
+          <video controls poster="vidpic6.jpg">
+            <source src="9.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <p>Session Recap</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+
+      <div class="brand">
+        <img src="kickstart-logo-transparent.jpg" alt="KickStart Football logo" class="brand__logo" />
+        <span class="brand__text">
+          KickStart <small>FOOTBALL</small>
+        </span>
+      </div>
+
+      <p>
+        📍 Valley Arcade, Lavington, Nairobi ·
+        📞 0715669190 / 0792642665 ·
+        📷 @kickstartke
+      </p>
+
+      <p>
+        © <span id="year"></span> KickStart Football. All rights reserved.
+      </p>
+
+    </div>
+  </footer>
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <img id="lightbox-img">
+</div>
+  <!-- Auto-update year -->
+  <script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Pause other videos
+const videos = document.querySelectorAll("video");
+
+videos.forEach(video => {
+    video.addEventListener("play", function () {
+        videos.forEach(otherVideo => {
+            if (otherVideo !== video) {
+                otherVideo.pause();
+                otherVideo.currentTime = 0;
+            }
+        });
+    });
+});
+
+// Lightbox
+const images = document.querySelectorAll(".gallery__item img");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const close = document.querySelector(".close");
+
+images.forEach(img => {
+    img.addEventListener("click", function () {
+        lightbox.style.display = "flex";
+        lightboxImg.src = this.src;
+    });
+});
+
+close.onclick = function () {
+    lightbox.style.display = "none";
+};
+
+lightbox.onclick = function(e) {
+    if (e.target === lightbox) {
+        lightbox.style.display = "none";
+    }
+};
+</script>
+
+</body>
+</html>
