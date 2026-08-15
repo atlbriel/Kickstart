@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="kickstart-logo-transparent.jpg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Find a Class | KickStart Football</title>
+
+    <style>
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #272626;
+            background: #fafafa;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+
+        /* =========================================================
+           VARIABLES
+        ========================================================= */
+
+        :root {
+            --purple: #431458;
+            --purple-dark: #3e1357;
+            --yellow: #f8fc27;
+            --light-purple: #f5f0fa;
+            --light-yellow: #fff8cf;
+            --dark: #202020;
+            --white: #ffffff;
+            --gray: #666666;
+            --max-width: 1400px;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .site-header {
+            position: relative;
+            z-index: 1000;
+            background: var(--white);
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .header-inner {
+            width: min(100% - 80px, var(--max-width));
+            height: 88px;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            display: inline-flex;
+            flex-direction: column;
+            line-height: .75;
+            font-weight: 900;
+            text-transform: lowercase;
+        }
+
+        .brand-little {
+            font-size: 19px;
+        }
+
+        .brand-kickers {
+            font-size: 30px;
+            color: var(--purple);
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .main-nav > a,
+        .nav-dropdown > a {
+            position: relative;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 34px 0;
+        }
+
+        .main-nav > a::after,
+        .nav-dropdown > a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 25px;
+
+            width: 0;
+            height: 2px;
+
+            background: var(--purple);
+
+            transition: width .25s ease;
+        }
+
+        .main-nav > a:hover::after,
+        .nav-dropdown > a:hover::after {
+            width: 100%;
+        }
+
+        .find-class-link {
+            padding: 13px 20px !important;
+            background: var(--purple);
+            color: white;
+            border-radius: 30px;
+        }
+
+        .find-class-link::after {
+            display: none;
+        }
+
+        .mobile-menu-button {
+            display: none;
+            border: 0;
+            background: transparent;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+
+        /* =========================================================
+           MOBILE MENU
+        ========================================================= */
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu a {
+            padding: 18px 25px;
+            border-bottom: 1px solid #eee;
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           FIND CLASS HERO
+        ========================================================= */
+
+        .find-class-hero {
+            min-height: 560px;
+
+            padding: 100px 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            background: var(--purple);
+
+            color: white;
+        }
+
+        .find-class-hero-content {
+            max-width: 900px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+
+            margin-bottom: 15px;
+
+            font-size: 13px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            color: var(--yellow);
+        }
+
+        .find-class-hero h1 {
+            margin: 25px 0;
+
+            font-size: clamp(65px, 8vw, 110px);
+
+            line-height: .85;
+
+            letter-spacing: -5px;
+
+            font-weight: 900;
+        }
+
+        .find-class-hero p {
+            max-width: 650px;
+
+            margin: auto;
+
+            font-size: 19px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           SEARCH SECTION
+        ========================================================= */
+
+        .class-search-section {
+            width: min(100% - 60px, 1100px);
+
+            margin: auto;
+
+            padding: 110px 0;
+        }
+
+        .class-search-intro {
+            margin-bottom: 50px;
+
+            text-align: center;
+        }
+
+        .class-search-intro h2 {
+            margin: 20px 0;
+
+            font-size: clamp(50px, 6vw, 80px);
+
+            line-height: .87;
+
+            letter-spacing: -4px;
+
+            color: var(--purple);
+
+            font-weight: 900;
+        }
+
+        .class-search-intro p {
+            color: #555;
+
+            font-size: 18px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           LOCATION + AGE SEARCH FORM
+        ========================================================= */
+
+        .class-search-form {
+            display: grid;
+
+            grid-template-columns: 1.5fr 1fr auto;
+
+            align-items: end;
+
+            gap: 18px;
+
+            padding: 30px;
+
+            border-radius: 10px;
+
+            background: var(--light-purple);
+        }
+
+        .search-input-wrapper label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            color: var(--purple);
+        }
+
+        .search-input-wrapper input,
+        .search-input-wrapper select {
+            width: 100%;
+
+            padding: 16px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 5px;
+
+            background: white;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        .search-input-wrapper input:focus,
+        .search-input-wrapper select:focus {
+            border-color: var(--purple);
+        }
+
+        .class-search-button {
+            padding: 16px 25px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background: var(--purple);
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+
+            transition: .2s ease;
+        }
+
+        .class-search-button:hover {
+            background: #32103f;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================================
+           SEARCH MESSAGE
+        ========================================================= */
+
+        .search-message {
+            min-height: 25px;
+
+            margin-top: 20px;
+
+            text-align: center;
+
+            font-weight: 700;
+
+            color: var(--purple);
+        }
+
+
+        /* =========================================================
+           FORM CONTAINER
+        ========================================================= */
+
+        .class-request-section {
+            display: none;
+
+            padding: 100px 30px;
+
+            background: var(--light-purple);
+        }
+
+        .class-request-section.show {
+            display: block;
+        }
+
+        .class-request-inner {
+            width: min(100%, 850px);
+
+            margin: auto;
+        }
+
+        .class-request-heading {
+            margin-bottom: 40px;
+
+            text-align: center;
+        }
+
+        .class-request-heading .eyebrow {
+            color: var(--purple);
+        }
+
+        .class-request-heading h2 {
+            margin: 15px 0;
+
+            font-size: clamp(45px, 6vw, 75px);
+
+            line-height: .9;
+
+            letter-spacing: -4px;
+
+            color: var(--purple);
+
+            font-weight: 900;
+        }
+
+        .class-request-heading p {
+            max-width: 650px;
+
+            margin: auto;
+
+            color: #555;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           FORMSPREE FORM
+        ========================================================= */
+
+        .class-request-form {
+            padding: 45px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            box-shadow: 0 15px 45px rgba(0,0,0,.08);
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            color: var(--purple);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+
+            padding: 15px 16px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 5px;
+
+            background: white;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 130px;
+
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--purple);
+        }
+
+        .class-request-submit {
+            width: 100%;
+
+            padding: 17px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background: var(--purple);
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .class-request-submit:hover {
+            background: #32103f;
+        }
+
+        .form-note {
+            margin-top: 15px;
+
+            text-align: center;
+
+            color: #777;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           SELECTED SEARCH DETAILS
+        ========================================================= */
+
+        .selected-details {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+
+            margin-bottom: 30px;
+        }
+
+        .selected-detail {
+            padding: 18px;
+
+            border-radius: 8px;
+
+            background: var(--light-yellow);
+
+            border-left: 4px solid var(--purple);
+        }
+
+        .selected-detail span {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #777;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+        .selected-detail strong {
+            color: var(--purple);
+
+            font-size: 17px;
+        }
+
+
+        /* =========================================================
+           PROGRAMMES
+        ========================================================= */
+
+        .find-programmes {
+            padding: 110px 30px;
+
+            background: white;
+        }
+
+        .find-programmes .section-heading {
+            width: min(100%, 1000px);
+
+            margin: auto;
+
+            text-align: center;
+        }
+
+        .find-programmes .section-heading h2 {
+            margin: 20px 0 60px;
+
+            font-size: clamp(55px, 7vw, 85px);
+
+            line-height: .85;
+
+            letter-spacing: -4px;
+
+            color: var(--purple);
+
+            font-weight: 900;
+        }
+
+        .programme-options {
+            width: min(100%, 1000px);
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+        }
+
+        .programme-option {
+            position: relative;
+
+            padding: 35px;
+
+            background: var(--light-purple);
+
+            border-radius: 8px;
+
+            color: var(--purple);
+
+            transition: transform .25s ease;
+        }
+
+        .programme-option:hover {
+            transform: translateY(-5px);
+        }
+
+        .programme-age {
+            display: block;
+
+            margin-bottom: 12px;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            opacity: .65;
+        }
+
+        .programme-option h3 {
+            margin: 0;
+
+            font-size: 30px;
+
+            font-weight: 900;
+        }
+
+        .programme-arrow {
+            position: absolute;
+
+            right: 30px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 35px;
+        }
+
+
+        /* =========================================================
+           CTA
+        ========================================================= */
+
+        .find-class-cta {
+            padding: 120px 30px;
+
+            background: var(--yellow);
+
+            text-align: center;
+        }
+
+        .find-class-cta > div {
+            max-width: 850px;
+
+            margin: auto;
+        }
+
+        .find-class-cta .eyebrow {
+            color: var(--purple);
+        }
+
+        .find-class-cta h2 {
+            margin: 20px 0;
+
+            font-size: clamp(55px, 7vw, 90px);
+
+            line-height: .85;
+
+            letter-spacing: -4px;
+
+            color: var(--purple);
+
+            font-weight: 900;
+        }
+
+        .find-class-cta p {
+            margin-bottom: 35px;
+
+            font-size: 18px;
+
+            color: #444;
+        }
+
+        .cta-button {
+            display: inline-block;
+
+            padding: 16px 30px;
+
+            border-radius: 40px;
+
+            background: var(--purple);
+
+            color: white;
+
+            font-weight: 900;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .site-footer {
+            background: #1c1c1c;
+
+            color: white;
+
+            padding-top: 80px;
+        }
+
+        .footer-main {
+            width: min(100% - 80px, 1250px);
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+
+            gap: 50px;
+
+            padding-bottom: 70px;
+        }
+
+        .footer-logo {
+            color: white;
+        }
+
+        .footer-logo .brand-kickers {
+            color: var(--yellow);
+        }
+
+        .footer-column {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 13px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 10px;
+
+            color: var(--yellow);
+
+            font-size: 17px;
+        }
+
+        .footer-column a {
+            color: #ccc;
+
+            font-size: 14px;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+
+            width: min(100% - 80px, 1250px);
+
+            margin: auto;
+
+            padding: 25px 0 40px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .footer-bottom div {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 20px;
+        }
+
+        .footer-bottom a,
+        .footer-bottom p {
+            color: #888;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           TABLET
+        ========================================================= */
+
+        @media (max-width: 1100px) {
+
+            .main-nav {
+                gap: 18px;
+            }
+
+            .class-search-form {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .class-search-button {
+                grid-column: 1 / -1;
+            }
+
+            .footer-main {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 760px) {
+
+            .header-inner {
+                height: 70px;
+            }
+
+            .main-nav {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .find-class-hero {
+                min-height: 500px;
+
+                padding: 80px 20px;
+            }
+
+            .find-class-hero h1 {
+                font-size: 60px;
+
+                letter-spacing: -3px;
+            }
+
+            .class-search-section {
+                width: calc(100% - 40px);
+
+                padding: 80px 0;
+            }
+
+            .class-search-form {
+                grid-template-columns: 1fr;
+
+                padding: 22px;
+            }
+
+            .class-search-button {
+                grid-column: auto;
+
+                width: 100%;
+            }
+
+            .class-request-section {
+                padding: 80px 20px;
+            }
+
+            .class-request-form {
+                padding: 30px 22px;
+            }
+
+            .class-request-heading h2 {
+                font-size: 50px;
+
+                letter-spacing: -3px;
+            }
+
+            .selected-details {
+                grid-template-columns: 1fr;
+            }
+
+            .programme-options {
+                grid-template-columns: 1fr;
+            }
+
+            .find-programmes {
+                padding: 80px 20px;
+            }
+
+            .find-class-cta {
+                padding: 90px 20px;
+            }
+
+            .find-class-cta h2 {
+                font-size: 55px;
+
+                letter-spacing: -3px;
+            }
+
+            .footer-main {
+                width: calc(100% - 40px);
+
+                grid-template-columns: 1fr;
+
+                gap: 45px;
+            }
+
+            .footer-bottom {
+                width: calc(100% - 40px);
+
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+        <a href="index.html" class="brand">
+            <span class="brand-little">KickStart</span>
+            <span class="brand-kickers">Football</span>
+        </a>
+
+
+        <nav class="main-nav">
+
+            <a href="index.html">Home</a>
+
+            <a href="about.html">About</a>
+
+            <a href="programmes.html">Programmes</a>
+
+            <a href="shop.html">Shop</a>
+
+            <a href="faq.html">FAQs</a>
+
+            <a href="contact.html">Contact</a>
+
+          <a href="find-class.html" class="find-class-link">
+    Find a Class
+</a>
+
+        </nav>
+
+
+        <button
+            class="mobile-menu-button"
+            onclick="toggleMobileMenu()"
+            aria-label="Open menu">
+            ☰
+        </button>
+
+    </div>
+
+
+    <div class="mobile-menu" id="mobileMenu">
+
+        <a href="index.html">Home</a>
+
+        <a href="about.html">About</a>
+
+        <a href="programmes.html">Programmes</a>
+
+        <a href="shop.html">Shop</a>
+
+        <a href="faq.html">FAQs</a>
+
+        <a href="contact.html">Contact</a>
+
+        <a href="find-a-class.html">Find a Class</a>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="find-class-hero">
+
+    <div class="find-class-hero-content">
+
+        <span class="eyebrow">
+            FIND YOUR LOCAL CLASS
+        </span>
+
+        <h1>
+            Find A Class
+        </h1>
+
+        <p>
+            Tell us where you are and your child's age.
+            We'll help you find the right KickStart Football
+            class for them.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     SEARCH
+========================================================= -->
+
+<section class="class-search-section">
+
+    <div class="class-search-intro">
+
+        <span class="eyebrow">
+            START HERE
+        </span>
+
+        <h2>
+            Where Are You?
+        </h2>
+
+        <p>
+            Enter your town or location and your child's age
+            to continue.
+        </p>
+
+    </div>
+
+
+    <form
+        class="class-search-form"
+        id="classSearchForm">
+
+        <!-- LOCATION -->
+
+        <div class="search-input-wrapper">
+
+            <label for="location">
+                Your Location / Town
+            </label>
+
+            <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="e.g. Nairobi"
+                required>
+
+        </div>
+
+
+        <!-- AGE -->
+
+        <div class="search-input-wrapper">
+
+            <label for="age">
+                Child's Age
+            </label>
+
+            <select
+                id="age"
+                name="age"
+                required>
+
+                <option value="">
+                    Select age
+                </option>
+
+                <option value="18 months – 2 years">
+                    18 months – 2 years
+                </option>
+
+                <option value="2 – 3 years">
+                    2 – 3 years
+                </option>
+
+                <option value="3 – 4 years">
+                    3 – 4 years
+                </option>
+
+                <option value="4 – 5 years">
+                    4 – 5 years
+                </option>
+
+                <option value="5 – 6 years">
+                    5 – 6 years
+                </option>
+
+                <option value="6 – 7 years">
+                    6 – 7 years
+                </option>
+
+                <option value="7 – 8 years">
+                    7 – 8 years
+                </option>
+
+                <option value="8 – 9 years">
+                    8 – 9 years
+                </option>
+
+                <option value="9 – 10 years">
+                    9 – 10 years
+                </option>
+
+                <option value="10+ years">
+                    10+ years
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- BUTTON -->
+
+        <button
+            type="submit"
+            class="class-search-button">
+
+            Find A Class
+
+        </button>
+
+    </form>
+
+
+    <div
+        class="search-message"
+        id="searchMessage">
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FORMSPREE REQUEST FORM
+========================================================= -->
+
+<section
+    class="class-request-section"
+    id="classRequestSection">
+
+    <div class="class-request-inner">
+
+
+        <div class="class-request-heading">
+
+            <span class="eyebrow">
+                CLASS REQUEST
+            </span>
+
+            <h2>
+                Let's Find Your Class
+            </h2>
+
+            <p>
+                Complete the form below and we'll help you
+                find a suitable class in your area.
+            </p>
+
+        </div>
+
+
+        <!-- SELECTED LOCATION + AGE -->
+
+        <div class="selected-details">
+
+            <div class="selected-detail">
+
+                <span>
+                    Location
+                </span>
+
+                <strong id="selectedLocation">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="selected-detail">
+
+                <span>
+                    Child's Age
+                </span>
+
+                <strong id="selectedAge">
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             FORMSPREE FORM
+
+             REPLACE YOUR_FORMSPREE_ENDPOINT WITH YOUR
+             ACTUAL FORMSPREE URL.
+
+             Example:
+             https://formspree.io/f/abcdwxyz
+        ====================================================== -->
+
+        <form
+            class="class-request-form"
+            action="YOUR_FORMSPREE_ENDPOINT"
+            method="POST">
+
+
+            <!-- Hidden location -->
+
+            <input
+                type="hidden"
+                name="location"
+                id="formLocation">
+
+
+            <!-- Hidden age -->
+
+            <input
+                type="hidden"
+                name="child_age"
+                id="formAge">
+
+
+            <!-- NAME -->
+
+            <div class="form-group">
+
+                <label for="parentName">
+                    Parent / Guardian Name
+                </label>
+
+                <input
+                    type="text"
+                    id="parentName"
+                    name="parent_name"
+                    placeholder="Enter your full name"
+                    required>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    required>
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="e.g. 0712 345 678"
+                    required>
+
+            </div>
+
+
+            <!-- LOCATION DISPLAY -->
+
+            <div class="form-group">
+
+                <label for="formLocationDisplay">
+                    Preferred Location
+                </label>
+
+                <input
+                    type="text"
+                    id="formLocationDisplay"
+                    readonly>
+
+            </div>
+
+
+            <!-- AGE DISPLAY -->
+
+            <div class="form-group">
+
+                <label for="formAgeDisplay">
+                    Child's Age
+                </label>
+
+                <input
+                    type="text"
+                    id="formAgeDisplay"
+                    readonly>
+
+            </div>
+
+
+            <!-- MESSAGE -->
+
+            <div class="form-group">
+
+                <label for="message">
+                    Anything Else You'd Like Us To Know?
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Tell us anything that may help us find the right class."></textarea>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="class-request-submit">
+
+                Submit Class Request
+
+            </button>
+
+
+            <p class="form-note">
+                We'll use the information you provide to help
+                identify a suitable class for your child.
+            </p>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PROGRAMMES
+========================================================= -->
+
+<section class="find-programmes">
+
+    <div class="section-heading">
+
+        <span class="eyebrow">
+            OUR PROGRAMMES
+        </span>
+
+        <h2>
+            Something For Every Age
+        </h2>
+
+    </div>
+
+
+    <div class="programme-options">
+
+
+        <a href="programmes.html"
+           class="programme-option">
+
+            <span class="programme-age">
+                18 Months – 2 Years
+            </span>
+
+            <h3>
+                Little Kicks
+            </h3>
+
+            <span class="programme-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <a href="programmes.html"
+           class="programme-option">
+
+            <span class="programme-age">
+                2 – 3 Years
+            </span>
+
+            <h3>
+                Junior Kickers
+            </h3>
+
+            <span class="programme-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <a href="programmes.html"
+           class="programme-option">
+
+            <span class="programme-age">
+                3 – 5 Years
+            </span>
+
+            <h3>
+                Mighty Kickers
+            </h3>
+
+            <span class="programme-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <a href="programmes.html"
+           class="programme-option">
+
+            <span class="programme-age">
+                5 – 10 Years
+            </span>
+
+            <h3>
+                Mega Kickers
+            </h3>
+
+            <span class="programme-arrow">
+                →
+            </span>
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="find-class-cta">
+
+    <div>
+
+        <span class="eyebrow">
+            READY TO GET STARTED?
+        </span>
+
+        <h2>
+            Let's Get Kicking.
+        </h2>
+
+        <p>
+            Find the right class and give your child
+            a fun way to learn, play and grow.
+        </p>
+
+        <a
+            href="#classSearchForm"
+            class="cta-button">
+
+            Find A Class
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="site-footer">
+
+    <div class="footer-main">
+
+
+        <div>
+
+            <a href="index.html"
+               class="brand footer-logo">
+
+                <span class="brand-little">
+                    KickStart
+                </span>
+
+                <span class="brand-kickers">
+                    Football
+                </span>
+
+            </a>
+
+            <p style="
+                margin-top:20px;
+                color:#aaa;
+                max-width:350px;
+                line-height:1.6;
+                font-size:14px;
+            ">
+                Fun football classes helping children
+                build confidence, friendships and skills.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Explore
+            </h3>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+            <a href="programmes.html">
+                Programmes
+            </a>
+
+            <a href="find-a-class.html">
+                Find A Class
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Help
+            </h3>
+
+            <a href="faq.html">
+                FAQs
+            </a>
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+            <a href="terms.html">
+                Terms & Conditions
+            </a>
+
+            <a href="privacy.html">
+                Privacy Policy
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Contact
+            </h3>
+
+            <a href="contact.html">
+                Get In Touch
+            </a>
+
+            <a href="find-a-class.html">
+                Find A Class
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Little Kickers. All rights reserved.
+        </p>
+
+        <div>
+
+           <a href="terms.html">
+    Terms & Conditions
+</a>
+           
+        </div>
+
+    </div>
+
+</footer>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    /* =========================================================
+       MOBILE MENU
+    ========================================================= */
+
+    function toggleMobileMenu() {
+
+        const menu =
+            document.getElementById("mobileMenu");
+
+        menu.classList.toggle("active");
+
+    }
+
+
+
+    /* =========================================================
+       FIND A CLASS FORM
+    ========================================================= */
+
+    const classSearchForm =
+        document.getElementById("classSearchForm");
+
+    const classRequestSection =
+        document.getElementById("classRequestSection");
+
+    const searchMessage =
+        document.getElementById("searchMessage");
+
+    const locationInput =
+        document.getElementById("location");
+
+    const ageInput =
+        document.getElementById("age");
+
+
+
+    classSearchForm.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            const location =
+                locationInput.value.trim();
+
+            const age =
+                ageInput.value;
+
+
+            /* CHECK LOCATION */
+
+            if (!location) {
+
+                searchMessage.textContent =
+                    "Please enter your location or town.";
+
+                locationInput.focus();
+
+                return;
+
+            }
+
+
+            /* CHECK AGE */
+
+            if (!age) {
+
+                searchMessage.textContent =
+                    "Please select your child's age.";
+
+                ageInput.focus();
+
+                return;
+
+            }
+
+
+            /* SHOW SUCCESS MESSAGE */
+
+            searchMessage.textContent =
+                "Great! Complete the form below and we'll help you find a class.";
+
+
+            /* SHOW FORM */
+
+            classRequestSection.classList.add("show");
+
+
+            /* DISPLAY SELECTED INFORMATION */
+
+            document.getElementById(
+                "selectedLocation"
+            ).textContent = location;
+
+
+            document.getElementById(
+                "selectedAge"
+            ).textContent = age;
+
+
+            /* PUT INFORMATION INTO FORMSPREE */
+
+            document.getElementById(
+                "formLocation"
+            ).value = location;
+
+
+            document.getElementById(
+                "formAge"
+            ).value = age;
+
+
+            /* DISPLAY INFORMATION IN FORM */
+
+            document.getElementById(
+                "formLocationDisplay"
+            ).value = location;
+
+
+            document.getElementById(
+                "formAgeDisplay"
+            ).value = age;
+
+
+            /* SCROLL TO FORM */
+
+            setTimeout(function() {
+
+                classRequestSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }, 150);
+
+        }
+
+    );
+
+</script>
+
+
+</body>
+</html>
